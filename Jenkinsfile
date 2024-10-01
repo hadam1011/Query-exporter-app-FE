@@ -27,15 +27,15 @@ pipeline {
         //     }
         // }
 
-        stage ('Identify Git Event') {
-            steps {
-                script {
-                    // Lấy thông tin về nhánh và sự kiện
-                    def branchName = env.GIT_BRANCH ?: 'unknown'
-                    echo "Triggered on branch: ${branchName}"
-                }
-            }
-        }
+        // stage ('Identify Git Event') {
+        //     steps {
+        //         script {
+        //             // Lấy thông tin về nhánh và sự kiện
+        //             def branchName = env.GIT_BRANCH ?: 'unknown'
+        //             echo "Triggered on branch: ${branchName}"
+        //         }
+        //     }
+        // }
 
         stage ('Clone project') {
             steps {
