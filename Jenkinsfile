@@ -32,9 +32,7 @@ pipeline {
                 script {
                     // Lấy thông tin về nhánh và sự kiện
                     def branchName = env.GIT_BRANCH ?: 'unknown'
-                    def eventType = env.GITHUB_EVENT_NAME ?: 'unknown'
-
-                    echo "Triggered by: ${eventType} on branch: ${branchName}"
+                    echo "Triggered on branch: ${branchName}"
                 }
             }
         }
