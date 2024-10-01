@@ -15,23 +15,23 @@ pipeline {
           }
         }
 
-        stage('SonarCloud analysis') {
-            environment {
-                scannerHome = tool 'Sonarqube scanner'
-            }
+        // stage('SonarCloud analysis') {
+        //     environment {
+        //         scannerHome = tool 'Sonarqube scanner'
+        //     }
 
-            steps {
-                withSonarQubeEnv(credentialsId: 'sonarcloud_token', installationName: 'SonarCloud') {
-                    powershell """
-                        ${scannerHome}\\bin\\sonar-scanner.bat `
-                            -D"sonar.organization=hadam1011" `
-                            -D"sonar.projectKey=hadam1011_Query-exporter-app-FE2" `
-                            -D"sonar.sources=./src" `
-                            -D"sonar.host.url=https://sonarcloud.io"
-                    """
-                }
-            }
-        }
+        //     steps {
+        //         withSonarQubeEnv(credentialsId: 'sonarcloud_token', installationName: 'SonarCloud') {
+        //             powershell """
+        //                 ${scannerHome}\\bin\\sonar-scanner.bat `
+        //                     -D"sonar.organization=hadam1011" `
+        //                     -D"sonar.projectKey=hadam1011_Query-exporter-app-FE2" `
+        //                     -D"sonar.sources=./src" `
+        //                     -D"sonar.host.url=https://sonarcloud.io"
+        //             """
+        //         }
+        //     }
+        // }
 
         stage ('Build images') {
             steps {
@@ -63,8 +63,8 @@ pipeline {
                     git config user.email "hadam8910@gmail.com"
                     git config user.name "hadam1011"
                     git add .
-                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                    git push https://${GITHUB_TOKEN}@github.com/hadam1011/manifests
+                    git commit -m "Update frontend deployment image to version ${BUILD_NUMBER}"
+                    git push https://${GITHUB_TOKEN}@github.com/hadam1011/manifests -f
                 """
             }
         }
