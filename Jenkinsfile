@@ -31,18 +31,15 @@ pipeline {
             when {
                 branch 'main'
             }
-            
-            // Clone project
+
             steps {
+                // Clone project
                 git branch: 'main', url: 'https://github.com/hadam1011/Query-exporter-app-FE.git'
-            }
-
-            steps {
+                
+                // Build image
                 bat "docker build -t ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER} ."
-            }
-
-            // Push images to Docker Hub
-            steps {
+                
+                // Push images to Docker Hub
                 bat """
                     docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}
                     docker push ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER}
