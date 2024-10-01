@@ -27,15 +27,25 @@ pipeline {
         //     }
         // }
 
-        stage ('Build') {
-            when {
-                branch 'main'
-            }
-
+        stage ('Identify Git Event') {
             steps {
-                // Clone project
+                script {
+                    // Lấy thông tin về nhánh và sự kiện
+                    def branchName = env.GIT_BRANCH ?: 'unknown'
+
+                    echo "Triggered on branch: ${branchName}"
+                }
+            }
+        }
+
+        stage ('Clone project') {
+            steps {
                 git branch: 'main', url: 'https://github.com/hadam1011/Query-exporter-app-FE.git'
-                
+            }
+        }
+
+        stage ('Build') {
+            steps {
                 // Build image
                 bat "docker build -t ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER} ."
                 
@@ -48,10 +58,6 @@ pipeline {
         }
 
         stage ('Deploy') {
-            when {
-                branch 'main'
-            }
-
             steps {
                 bat """
                     git config user.email "hadam8910@gmail.com"
@@ -64,9 +70,10 @@ pipeline {
                     cd manifests
                     git config user.email "hadam8910@gmail.com"
                     git config user.name "hadam1011"
+                    git pull
                     git add .
                     git commit -m "Update frontend deployment image to version ${BUILD_NUMBER}"
-                    git push https://${GITHUB_TOKEN}@github.com/hadam1011/manifests -f
+                    git push https://${GITHUB_TOKEN}@github.com/hadam1011/manifests
                 """
             }
         }
