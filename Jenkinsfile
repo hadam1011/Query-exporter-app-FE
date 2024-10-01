@@ -28,10 +28,11 @@ pipeline {
         // }
 
         stage ('Get branch name') {
+            environment {
+                BRANCH_NAME = "${GIT_BRANCH.split("/")[1]}"
+            }
+            
             steps {
-                environment {
-                    BRANCH_NAME = "${GIT_BRANCH.split("/")[1]}"
-                }
 
                 bat "echo ${BRANCH_NAME}"
             }
