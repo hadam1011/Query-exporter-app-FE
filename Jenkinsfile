@@ -32,7 +32,6 @@ pipeline {
                 script {
                     // Lấy thông tin về nhánh và sự kiện
                     def branchName = env.GIT_BRANCH ?: 'unknown'
-
                     echo "Triggered on branch: ${branchName}"
                 }
             }
@@ -73,9 +72,6 @@ pipeline {
                     git add .
                     git commit -m "Update frontend deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/hadam1011/manifests
-
-                    cd ..
-                    rmdir /s /q manifests 
                 """
             }
         }
