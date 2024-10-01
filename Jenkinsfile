@@ -72,15 +72,9 @@ pipeline {
                     git add .
                     git commit -m "Update frontend deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/hadam1011/manifests
-                """
-            }
-        }
 
-        stage ('Clean workspace') {
-            steps {
-                bat """
                     cd ..
-                    rmdir /s /q Query-exporter-app FE
+                    rmdir /s /q manifests
                 """
             }
         }
