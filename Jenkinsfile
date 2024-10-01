@@ -78,8 +78,10 @@ pipeline {
 
         stage ('Clean workspace') {
             steps {
-                bat "cd .."
-                bat "rmdir /s /q Query-exporter-app-FE"
+                bat """
+                    cd ..
+                    rmdir /s /q Query-exporter-app-FE
+                """
             }
         }
     }
