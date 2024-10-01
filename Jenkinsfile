@@ -63,8 +63,8 @@ pipeline {
                     git config user.email "hadam8910@gmail.com"
                     git config user.name "hadam1011"
                     git add .
-                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                    git push https://${GITHUB_TOKEN}@github.com/hadam1011/manifests
+                    git commit -m "Update frontend deployment image to version ${BUILD_NUMBER}"
+                    git push https://${GITHUB_TOKEN}@github.com/hadam1011/manifests -f
                 """
             }
         }
