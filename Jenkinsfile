@@ -56,28 +56,29 @@ pipeline {
             }
         }
 
-        // stage ('Deploy') {
-        //     steps {
-        //         bat """
-        //             git config user.email "hadam8910@gmail.com"
-        //             git config user.name "hadam1011"
-        //             powershell -Command "(Get-Content deployments/frontend-deployment.yaml) -replace 'imageVersion', ${BUILD_NUMBER} | Out-File -encoding ASCII deployments/frontend-deployment.yaml"
+        stage ('Deploy') {
+            steps {
+                bat """
+                    git config user.email "hadam8910@gmail.com"
+                    git config user.name "hadam1011"
+                    powershell -Command "(Get-Content deployments/frontend-deployment.yaml) -replace 'imageVersion', ${BUILD_NUMBER} | Out-File -encoding ASCII deployments/frontend-deployment.yaml"
                     
-        //             git clone https://github.com/hadam1011/manifests.git
-        //             copy deployments\\frontend-deployment.yaml manifests\\query-exporter-app\\frontend-deployment.yaml
+                    git clone https://github.com/hadam1011/manifests.git
+                    copy deployments\\frontend-deployment.yaml manifests\\query-exporter-app\\frontend-deployment.yaml
 
-        //             cd manifests
-        //             git config user.email "hadam8910@gmail.com"
-        //             git config user.name "hadam1011"
-        //             git add .
-        //             git commit -m "Update frontend deployment image to version ${BUILD_NUMBER}"
-        //             git push https://${GITHUB_TOKEN}@github.com/hadam1011/manifests
-        //         """
-        //     }
-        // }
+                    cd manifests
+                    git config user.email "hadam8910@gmail.com"
+                    git config user.name "hadam1011"
+                    git add .
+                    git commit -m "Update frontend deployment image to version ${BUILD_NUMBER}"
+                    git push https://${GITHUB_TOKEN}@github.com/hadam1011/manifests
+                """
+            }
+        }
 
         stage ('Clean workspace') {
             steps {
+                bat "cd .."
                 bat "rmdir /s /q Query-exporter-app-FE"
             }
         }
