@@ -15,23 +15,23 @@ pipeline {
           }
         }
 
-        stage('SonarCloud analysis') {
-            environment {
-                scannerHome = tool 'Sonarqube scanner'
-            }
+        // stage('SonarCloud analysis') {
+        //     environment {
+        //         scannerHome = tool 'Sonarqube scanner'
+        //     }
 
-            steps {
-                withSonarQubeEnv(credentialsId: 'sonarcloud_token', installationName: 'SonarCloud') {
-                    powershell """
-                        ${scannerHome}\\bin\\sonar-scanner.bat `
-                            -D"sonar.organization=hadam1011" `
-                            -D"sonar.projectKey=hadam1011_Query-exporter-app-FE2" `
-                            -D"sonar.sources=./src" `
-                            -D"sonar.host.url=https://sonarcloud.io"
-                    """
-                }
-            }
-        }
+        //     steps {
+        //         withSonarQubeEnv(credentialsId: 'sonarcloud_token', installationName: 'SonarCloud') {
+        //             powershell """
+        //                 ${scannerHome}\\bin\\sonar-scanner.bat `
+        //                     -D"sonar.organization=hadam1011" `
+        //                     -D"sonar.projectKey=hadam1011_Query-exporter-app-FE2" `
+        //                     -D"sonar.sources=./src" `
+        //                     -D"sonar.host.url=https://sonarcloud.io"
+        //             """
+        //         }
+        //     }
+        // }
 
         stage ('Build images') {
             steps {
