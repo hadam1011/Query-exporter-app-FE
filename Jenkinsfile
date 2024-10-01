@@ -9,6 +9,10 @@ pipeline {
     }
 
     stages {
+        when {
+            branch 'main'
+        }
+
         stage ("Clone project") {
           steps {
             git branch: 'main', url: 'https://github.com/hadam1011/Query-exporter-app-FE.git'
