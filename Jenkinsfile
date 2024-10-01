@@ -1,6 +1,6 @@
 pipeline {
     agent any
-      
+
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub_login')
         GITHUB_CREDENTIALS = credentials('github_login')
@@ -32,7 +32,7 @@ pipeline {
         //         }
         //     }
         // }
-
+        // test
         stage ('Build images') {
             steps {
                 bat "docker build -t ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER} ."
