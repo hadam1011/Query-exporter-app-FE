@@ -32,7 +32,6 @@ pipeline {
                 script {
                     // Lấy thông tin về nhánh và sự kiện
                     def branchName = env.GIT_BRANCH ?: 'unknown'
-
                     echo "Triggered on branch: ${branchName}"
                 }
             }
