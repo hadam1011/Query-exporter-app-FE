@@ -32,9 +32,8 @@ pipeline {
                 script {
                     // Lấy thông tin về nhánh và sự kiện
                     def branchName = env.GIT_BRANCH ?: 'unknown'
-                    def eventType = env.GITHUB_EVENT_NAME ?: 'unknown'
 
-                    echo "Triggered by: ${eventType} on branch: ${branchName}"
+                    echo "Triggered on branch: ${branchName}"
                 }
             }
         }
@@ -71,10 +70,12 @@ pipeline {
                     cd manifests
                     git config user.email "hadam8910@gmail.com"
                     git config user.name "hadam1011"
-                    git pull
                     git add .
                     git commit -m "Update frontend deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/hadam1011/manifests
+
+                    cd ..
+                    rmdir /s /q manifests 
                 """
             }
         }
