@@ -32,7 +32,7 @@ pipeline {
         //         }
         //     }
         // }
-        // test
+
         stage ('Build images') {
             steps {
                 bat "docker build -t ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER} ."
