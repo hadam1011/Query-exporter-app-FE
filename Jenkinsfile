@@ -7,11 +7,12 @@ pipeline {
         GITHUB_TOKEN = credentials('github_token')
         DOCKERHUB_REPO = 'mad1011/query-exporter-app'
     }
+    
+    when {
+        branch 'main'
+    }
 
     stages {
-        when {
-            branch 'main'
-        }
 
         stage ("Clone project") {
           steps {
