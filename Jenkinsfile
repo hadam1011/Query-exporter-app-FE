@@ -80,7 +80,7 @@ pipeline {
             steps {
                 bat """
                     cd ..
-                    rmdir /s /q Query-exporter-app-FE
+                    rmdir /s /q Query-exporter-app FE
                 """
             }
         }
