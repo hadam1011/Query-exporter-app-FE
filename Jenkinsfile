@@ -25,7 +25,7 @@ pipeline {
                     powershell """
                         ${scannerHome}\\bin\\sonar-scanner.bat `
                             -D"sonar.organization=hadam1011" `
-                            -D"sonar.projectKey=hadam1011_Query-exporter-app-FE" `
+                            -D"sonar.projectKey=hadam1011_Query-exporter-app-FE2" `
                             -D"sonar.sources=./src" `
                             -D"sonar.host.url=https://sonarcloud.io"
                     """
