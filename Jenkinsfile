@@ -75,5 +75,11 @@ pipeline {
                 """
             }
         }
+
+        stage ('Clean workspace') {
+            steps {
+                bat "rmdir /s /q Query-exporter-app-FE"
+            }
+        }
     }
 }
