@@ -7,19 +7,8 @@ pipeline {
         GITHUB_TOKEN = credentials('github_token')
         DOCKERHUB_REPO = 'mad1011/query-exporter-app'
     }
-    
-    when {
-        branch 'main'
-    }
 
     stages {
-
-        stage ("Clone project") {
-          steps {
-            git branch: 'main', url: 'https://github.com/hadam1011/Query-exporter-app-FE.git'
-          }
-        }
-
         // stage('SonarCloud analysis') {
         //     environment {
         //         scannerHome = tool 'Sonarqube scanner'
@@ -38,14 +27,21 @@ pipeline {
         //     }
         // }
 
-        stage ('Build images') {
+        stage ('Build') {
+            when {
+                branch 'main'
+            }
+            
+            // Clone project
+            steps {
+                git branch: 'main', url: 'https://github.com/hadam1011/Query-exporter-app-FE.git'
+            }
+
             steps {
                 bat "docker build -t ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER} ."
-                
             }
-        }
 
-        stage ('Push images to Docker Hub') {
+            // Push images to Docker Hub
             steps {
                 bat """
                     docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}
@@ -54,7 +50,11 @@ pipeline {
             }
         }
 
-        stage ('Update deployment files') {
+        stage ('Deploy') {
+            when {
+                branch 'main'
+            }
+
             steps {
                 bat """
                     git config user.email "hadam8910@gmail.com"
