@@ -27,56 +27,46 @@ pipeline {
         //     }
         // }
 
-        stage ('Get branch name') {
-            environment {
-                BRANCH_NAME = "${GIT_BRANCH.split("/")[1]}"
-            }
-            
+        stage ('Clone project') {
             steps {
-                bat "echo 'branch name ${BRANCH_NAME}'"
+                git branch: 'main', url: 'https://github.com/hadam1011/Query-exporter-app-FE.git'
             }
         }
 
-        // stage ('Clone project') {
-        //     steps {
-        //         git branch: 'main', url: 'https://github.com/hadam1011/Query-exporter-app-FE.git'
-        //     }
-        // }
-
-        // stage ('Build') {
-        //     steps {
-        //         // Build image
-        //         bat "docker build -t ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER} ."
+        stage ('Build') {
+            steps {
+                // Build image
+                bat "docker build -t ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER} ."
                 
-        //         // Push images to Docker Hub
-        //         bat """
-        //             docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}
-        //             docker push ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER}
-        //         """
-        //     }
-        // }
+                // Push images to Docker Hub
+                bat """
+                    docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}
+                    docker push ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER}
+                """
+            }
+        }
 
-        // stage ('Deploy') {
-        //     steps {
-        //         bat """
-        //             git config user.email "hadam8910@gmail.com"
-        //             git config user.name "hadam1011"
-        //             powershell -Command "(Get-Content deployments/frontend-deployment.yaml) -replace 'imageVersion', ${BUILD_NUMBER} | Out-File -encoding ASCII deployments/frontend-deployment.yaml"
+        stage ('Deploy') {
+            steps {
+                bat """
+                    git config user.email "hadam8910@gmail.com"
+                    git config user.name "hadam1011"
+                    powershell -Command "(Get-Content deployments/frontend-deployment.yaml) -replace 'imageVersion', ${BUILD_NUMBER} | Out-File -encoding ASCII deployments/frontend-deployment.yaml"
                     
-        //             git clone https://github.com/hadam1011/manifests.git
-        //             copy deployments\\frontend-deployment.yaml manifests\\query-exporter-app\\frontend-deployment.yaml
+                    git clone https://github.com/hadam1011/manifests.git
+                    copy deployments\\frontend-deployment.yaml manifests\\query-exporter-app\\frontend-deployment.yaml
 
-        //             cd manifests
-        //             git config user.email "hadam8910@gmail.com"
-        //             git config user.name "hadam1011"
-        //             git add .
-        //             git commit -m "Update frontend deployment image to version ${BUILD_NUMBER}"
-        //             git push https://${GITHUB_TOKEN}@github.com/hadam1011/manifests
+                    cd manifests
+                    git config user.email "hadam8910@gmail.com"
+                    git config user.name "hadam1011"
+                    git add .
+                    git commit -m "Update frontend deployment image to version ${BUILD_NUMBER}"
+                    git push https://${GITHUB_TOKEN}@github.com/hadam1011/manifests
 
-        //             cd ..
-        //             rmdir /s /q manifests
-        //         """
-        //     }
-        // }
+                    cd ..
+                    rmdir /s /q manifests
+                """
+            }
+        }
     }
 }
