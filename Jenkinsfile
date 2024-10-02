@@ -27,18 +27,18 @@ pipeline {
         //     }
         // }
 
-        stage ('Clone project') {
-            steps {
-                git branch: 'main', url: 'https://github.com/hadam1011/Query-exporter-app-FE.git'
-            }
-        }
+        // stage ('Clone project') {
+        //     steps {
+        //         git branch: 'main', url: 'https://github.com/hadam1011/Query-exporter-app-FE.git'
+        //     }
+        // }
 
         stage ('Build') {
             steps {
                 // Build image
                 bat "docker build -t ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER} ."
                 
-                // Push images to Docker Hub
+                // Push image to Docker Hub
                 bat """
                     docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}
                     docker push ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER}
