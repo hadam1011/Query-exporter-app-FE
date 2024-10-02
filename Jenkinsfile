@@ -33,8 +33,7 @@ pipeline {
             }
             
             steps {
-
-                bat "echo ${BRANCH_NAME}"
+                bat "echo 'branch name ${BRANCH_NAME}'"
             }
         }
 
