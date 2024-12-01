@@ -10,7 +10,7 @@ import ListUserComponent from '../accounts/index.jsx';
 import NotAuthorized from '../error403/index.jsx';
 import CustomHeader from '../layout/CustomHeader.jsx';
 
-const { Sider, Content } = Layout;
+const { Sider, Content, Footer } = Layout;
 
 const DashBoard = () => {
     const [collapsed, setCollapsed] = useState(false);
@@ -49,6 +49,9 @@ const DashBoard = () => {
               <PrivateRoute path = "/users" component = {ListUserComponent}/>
               <PrivateRoute path="/not-authorized" component={NotAuthorized} />
             </Content>
+            <Footer style={{ textAlign: "center", padding: "0 25px 15px" }}>
+              Query-exporter-app v1.5
+            </Footer>
           </Layout>
         </Layout>
       </Layout>
