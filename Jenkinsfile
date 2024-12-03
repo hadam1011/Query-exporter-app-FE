@@ -72,12 +72,12 @@ pipeline {
     post {
         success {
             bat """
-                curl -X POST -H "Content-Type: application/json" -d \'{"chat_id": "6238565642", "text": "Pipeline run successfully!", "disable_notification": false}\' "https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage"
+                Invoke-WebRequest -Uri "https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage" -Method POST -ContentType "application/json" -Body '{"chat_id": "6238565642", "text": "Pipeline run successfully!", "disable_notification": false}' -UseBasicParsing
             """
         }
         failure {
             bat """
-                curl -X POST -H "Content-Type: application/json" -d \'{"chat_id": "6238565642", "text": "Pipeline has failed!", "disable_notification": false}\' "https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage"
+                Invoke-WebRequest -Uri "https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage" -Method POST -ContentType "application/json" -Body '{"chat_id": "6238565642", "text": "Pipeline has failed!", "disable_notification": false}' -UseBasicParsing
             """
         }
     }
