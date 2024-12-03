@@ -69,20 +69,16 @@ pipeline {
             }
         }
     }
-    post {
-        success {
-            bat """
-                curl -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage ^
-                    -H "Content-Type: application/json" ^
-                    -d "{\"chat_id\": \"6238565642\", \"text\": \"Pipeline run successfully!\", \"disable_notification\": false}"
-            """
+    post{
+        success{
+            script {
+                bat ''' curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="6238565642" -d text="Pipeline run successfully!" '''
+            }
         }
-        failure {
-            bat """
-            curl -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage ^
-                -H "Content-Type: application/json" ^
-                -d "{\"chat_id\": \"6238565642\", \"text\": \"Pipeline has failed!\", \"disable_notification\": false}"
-            """
+        failure{
+            script {
+                bat ''' curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="6238565642" -d text="Pipeline has failed!" '''
+            }
         }
     }
 }
