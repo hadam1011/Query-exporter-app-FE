@@ -72,12 +72,12 @@ pipeline {
     post{
         success{
             script {
-                bat ''' curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="-1006238565642" -d text="[SUCCESSED] Pipeline run successfully!" '''
+                bat ''' curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="-4657156617" -d text="[SUCCESSED] Pipeline run successfully!" '''
             }
         }
         failure{
             script {
-                bat ''' curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="-1006238565642" -d text="[FAILED] Pipeline has failed!" '''
+                bat ''' curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="-4657156617" -d text="[FAILED] Pipeline has failed!" '''
             }
         }
     }
