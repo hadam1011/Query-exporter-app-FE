@@ -86,20 +86,16 @@ pipeline {
     }
     post{
         success{
-            script {
-                bat '''
-                    echo ${FAILED_STAGE}
-                    curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="-4657156617" -d text="[SUCCESSED] Pipeline run successfully!" 
-                '''
-            }
+            bat """
+                echo ${FAILED_STAGE}
+                curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="-4657156617" -d text="[SUCCESSED] Pipeline run successfully!" 
+            """
         }
         failure{
-            script {
-                bat ''' 
-                    echo ${FAILED_STAGE}
-                    curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="-4657156617" -d text="[FAILED] Pipeline has failed at stage %FAILED_STAGE%!" 
-                '''
-            }
+            bat """ 
+                echo ${FAILED_STAGE}
+                curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="-4657156617" -d text="[FAILED] Pipeline has failed at stage %FAILED_STAGE%!" 
+            """
         }
     }
 }
