@@ -1,3 +1,4 @@
+def FAILED_STAGE  = ''
 pipeline {
     agent any
 
@@ -6,7 +7,6 @@ pipeline {
         GITHUB_CREDENTIALS = credentials('github_login')
         GITHUB_TOKEN = credentials('github_token')
         DOCKERHUB_REPO = 'mad1011/query-exporter-app'
-        FAILED_STAGE = 'test'
     }
 
     stages {
