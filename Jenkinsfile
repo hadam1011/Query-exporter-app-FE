@@ -1,4 +1,3 @@
-def FAILED_STAGE  = ''
 pipeline {
     agent any
 
@@ -7,6 +6,7 @@ pipeline {
         GITHUB_CREDENTIALS = credentials('github_login')
         GITHUB_TOKEN = credentials('github_token')
         DOCKERHUB_REPO = 'mad1011/query-exporter-app'
+        FAILED_STAGE  = ''
     }
 
     stages {
@@ -38,9 +38,10 @@ pipeline {
             steps {
                 // Build image
                 script {
-                    FAILED_STAGE = env.STAGE_NAME
+                    env.FAILED_STAGE = env.STAGE_NAME
                 }
                 bat """
+                    echo ${env.FAILED_STAGE}
                     docker build -t ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER} .
                 """
             }
