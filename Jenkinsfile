@@ -92,8 +92,8 @@ pipeline {
             """
         }
         failure{
+            def STAGE = ${FAILED_STAGE}
             bat """ 
-                def STAGE = ${FAILED_STAGE}
                 curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="-4657156617" -d text="[FAILED] Pipeline has failed at stage %STAGE%!" 
             """
         }
