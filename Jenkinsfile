@@ -37,8 +37,10 @@ pipeline {
         stage ('Build') {
             steps {
                 // Build image
+                script {
+                    FAILED_STAGE = env.STAGE_NAME
+                }
                 bat """
-                    set FAILED_STAGE=${env.STAGE_NAME}
                     docker build -t ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER} .
                 """
             }
