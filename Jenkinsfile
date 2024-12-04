@@ -51,7 +51,7 @@ pipeline {
         stage ('Push image to DockerHub') {
             steps {
                 script {
-                    echo ${FAILED_STAGE}
+                    echo FAILED_STAGE
                     FAILED_STAGE = env.STAGE_NAME
                 }
                 bat """
