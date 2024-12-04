@@ -86,7 +86,8 @@ pipeline {
         }
         failure{
             script {
-                bat ''' curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="-4657156617" -d text="[FAILED] Pipeline has failed at stage '${env.FAILED_STAGE}'! '''
+                def failedStage = env.FAILED_STAGE ?: 'Unknown stage'
+                bat ''' curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="-4657156617" -d text="[FAILED] Pipeline has failed at stage '${failedStage}'! '''
             }
         }
     }
