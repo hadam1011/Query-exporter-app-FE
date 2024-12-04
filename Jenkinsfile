@@ -34,17 +34,19 @@ pipeline {
         // }
 
         stage ('Build') {
-            FAILED_STAGE = env.STAGE_NAME
             steps {
                 // Build image
-                bat "docker build -t ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER} ."
+                bat """
+                    FAILED_STAGE = env.STAGE_NAME
+                    docker build -t ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER} .
+                """
             }
         }
 
         stage ('Push image to DockerHub') {
-            FAILED_STAGE = env.STAGE_NAME
             steps {
                 bat """
+                    FAILED_STAGE = env.STAGE_NAME
                     docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}
                     docker push ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER}
                 """
@@ -52,9 +54,9 @@ pipeline {
         }
 
         stage ('Deploy') {
-            FAILED_STAGE = env.STAGE_NAME
             steps {
                 bat """
+                    FAILED_STAGE = env.STAGE_NAME
                     git config user.email "hadam8910@gmail.com"
                     git config user.name "hadam1011"
                     powershell -Command "(Get-Content deployments/frontend-deployment.yaml) -replace 'imageVersion', ${BUILD_NUMBER} | Out-File -encoding ASCII deployments/frontend-deployment.yaml"
