@@ -34,16 +34,16 @@ pipeline {
         // }
 
         stage ('Build') {
+            FAILED_STAGE = env.STAGE_NAME
             steps {
-                FAILED_STAGE = env.STAGE_NAME
                 // Build image
                 bat "docker build -t ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER} ."
             }
         }
 
         stage ('Push image to DockerHub') {
+            FAILED_STAGE = env.STAGE_NAME
             steps {
-                FAILED_STAGE = env.STAGE_NAME
                 bat """
                     docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}
                     docker push ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER}
@@ -52,8 +52,8 @@ pipeline {
         }
 
         stage ('Deploy') {
+            FAILED_STAGE = env.STAGE_NAME
             steps {
-                FAILED_STAGE = env.STAGE_NAME
                 bat """
                     git config user.email "hadam8910@gmail.com"
                     git config user.name "hadam1011"
