@@ -6,6 +6,7 @@ pipeline {
         GITHUB_CREDENTIALS = credentials('github_login')
         GITHUB_TOKEN = credentials('github_token')
         DOCKERHUB_REPO = 'mad1011/query-exporter-app'
+        FAILED_STAGE = ''
     }
 
     stages {
@@ -37,7 +38,7 @@ pipeline {
             steps {
                 // Build image
                 bat """
-                    FAILED_STAGE = env.STAGE_NAME
+                    set FAILED_STAGE=${env.STAGE_NAME}
                     docker build -t ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER} .
                 """
             }
@@ -46,7 +47,7 @@ pipeline {
         stage ('Push image to DockerHub') {
             steps {
                 bat """
-                    FAILED_STAGE = env.STAGE_NAME
+                    set FAILED_STAGE=${env.STAGE_NAME}
                     docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}
                     docker push ${DOCKERHUB_REPO}:frontend-${BUILD_NUMBER}
                 """
@@ -56,7 +57,7 @@ pipeline {
         stage ('Deploy') {
             steps {
                 bat """
-                    FAILED_STAGE = env.STAGE_NAME
+                    set FAILED_STAGE=${env.STAGE_NAME}
                     git config user.email "hadam8910@gmail.com"
                     git config user.name "hadam1011"
                     powershell -Command "(Get-Content deployments/frontend-deployment.yaml) -replace 'imageVersion', ${BUILD_NUMBER} | Out-File -encoding ASCII deployments/frontend-deployment.yaml"
@@ -85,7 +86,7 @@ pipeline {
         }
         failure{
             script {
-                bat ''' curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="-4657156617" -d text="[FAILED] Pipeline has failed at stage "%FAILED_STAGE%" '''
+                bat ''' curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="-4657156617" -d text="[FAILED] Pipeline has failed at stage '${env.FAILED_STAGE}'! '''
             }
         }
     }
