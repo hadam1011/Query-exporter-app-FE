@@ -6,7 +6,7 @@ pipeline {
         GITHUB_CREDENTIALS = credentials('github_login')
         GITHUB_TOKEN = credentials('github_token')
         DOCKERHUB_REPO = 'mad1011/query-exporter-app'
-        FAILED_STAGE = ''
+        FAILED_STAGE = 'test'
     }
 
     stages {
@@ -86,7 +86,7 @@ pipeline {
         }
         failure{
             script {
-                bat ''' curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="-4657156617" -d text="[FAILED] Pipeline has failed at stage "%FAILED_STAGE%"! '''
+                bat ''' curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="-4657156617" -d text="[FAILED] Pipeline has failed at stage %FAILED_STAGE%! '''
             }
         }
     }
