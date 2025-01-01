@@ -50,7 +50,7 @@ const DashBoard = () => {
               <PrivateRoute path="/not-authorized" component={NotAuthorized} />
             </Content>
             <Footer style={{ textAlign: "center", padding: "0 25px 15px" }}>
-              Query-exporter-app v1.6
+              Query-exporter-app v1.7
             </Footer>
           </Layout>
         </Layout>
