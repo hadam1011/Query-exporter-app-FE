@@ -67,7 +67,7 @@ pipeline {
         success{
             bat """
                 echo ${FAILED_STAGE}
-                curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="-4657156617" -d text="[SUCCESSED] Pipeline run successfully!" 
+                curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="-4657156617" -d text="[SUCCESSED] Query-exporter-app FE pipeline run successfully!" 
             """
         }
         failure{
@@ -75,7 +75,7 @@ pipeline {
                 def STAGE = FAILED_STAGE
                 bat """ 
                     set "STAGE=${STAGE}"
-                    curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="-4657156617" -d text="[FAILED] Pipeline has failed at stage %STAGE%!" 
+                    curl -s -X POST https://api.telegram.org/bot7932959424:AAEfe8M7DCJ9G0-r5nx9ze8sEQvcIGwtUp0/sendMessage -d chat_id="-4657156617" -d text="[FAILED] Query-exporter-app FE pipeline has failed at stage %STAGE%!" 
                 """
             }
         }
