@@ -26,6 +26,9 @@ pipeline {
 
         stage ('Push image to DockerHub') {
             steps {
+                script {
+                    FAILED_STAGE = env.STAGE_NAME
+                }
                 bat """
                     echo ${FAILED_STAGE}
                     docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}
